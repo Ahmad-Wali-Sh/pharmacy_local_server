@@ -24,9 +24,10 @@ async function syncMedicineData() {
       );
       const records = medicineWithResponse.data;
       for (const record of records) {
-        const { medicine, additional } = record;
+        const { id, medicine, additional } = record;
         additional?.map((addId) => {
           MedicineWith.upsert({
+            id: id,
             medicine: medicine,
             additional: addId,
           });
