@@ -4,6 +4,7 @@ const prescriptionRoutes = require('./routes/prescriptions');
 const authRoutes = require('./routes/auth');
 const { findBackendUrl } = require('./utils/findBackendUrl');
 const path = require('path');
+const cors = require('cors');
 
 
 require('./models/Prescription');
@@ -12,6 +13,7 @@ require('./models/Medicine');
 
 const app = express();
 
+app.use(cors());
 
 app.use(express.json());
 app.use('/prescriptions', prescriptionRoutes);

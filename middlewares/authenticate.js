@@ -11,8 +11,6 @@ const authenticate = async (req, res, next) => {
   if (token.startsWith("Token ")) {
     token = token.slice(6); // Remove the "Token " part (6 characters)
   }
-
-  console.log("Token", token);
   try {
     const user = await User.findOne({ where: { django_token: token } });
 
