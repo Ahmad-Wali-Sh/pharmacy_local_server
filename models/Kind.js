@@ -7,6 +7,7 @@ const Kind = sequelize.define('Kind', {
     name_persian: { type: DataTypes.STRING, allowNull: true},
     image: { type: DataTypes.STRING, allowNull: true},
     description: { type: DataTypes.TEXT, allowNull: true},
+    image_path: {type: DataTypes.STRING, allowNull: true}
 });
 
 

@@ -8,6 +8,7 @@ const PharmGroup = sequelize.define('PharmGroup', {
     name_persian: {type: DataTypes.STRING, allowNull: true},
     image: {type: DataTypes.STRING, allowNull: true},
     description: {type: DataTypes.STRING, allowNull: true},
+    image_path: {type: DataTypes.STRING, allowNull: true},
   });
 
 

@@ -3,6 +3,8 @@ const sequelize = require('./config/database');
 const prescriptionRoutes = require('./routes/prescriptions');
 const authRoutes = require('./routes/auth');
 const { findBackendUrl } = require('./utils/findBackendUrl');
+const path = require('path');
+
 
 require('./models/Prescription');
 require('./models/Medicine');
@@ -10,9 +12,11 @@ require('./models/Medicine');
 
 const app = express();
 
+
 app.use(express.json());
 app.use('/prescriptions', prescriptionRoutes);
 app.use('/auth', authRoutes);
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 sequelize.sync({ alter: true, force: true })
     .then(() => console.log('Database synchronized'))

@@ -40,6 +40,7 @@ const Medicine = sequelize.define('Medicine', {
   department: { type: DataTypes.JSON, defaultValue: [] },
   min_expire_date: { type: DataTypes.INTEGER, defaultValue: 6 },
   big_company: { type: DataTypes.INTEGER, allowNull: true },
+  image_path: {type: DataTypes.STRING, allowNull: true},
 }, {
   tableName: 'medicine',
   timestamps: false,
