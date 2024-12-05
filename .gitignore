@@ -1,0 +1,19 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+
+# General
+.env
+.DS_Store
+.vscode/
+dist/
+
+database.sqlite

@@ -1,0 +1,23 @@
+{
+  "name": "pharmacy_local_backend",
+  "version": "1.0.0",
+  "description": "local express backend for offline usage",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "start-server": "nodemon app.js"
+  },
+  "author": "Ahmad Wali Sharify",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.8",
+    "bcrypt": "^5.1.1",
+    "bonjour": "^3.5.0",
+    "express": "^4.21.1",
+    "sequelize": "^6.37.5",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
