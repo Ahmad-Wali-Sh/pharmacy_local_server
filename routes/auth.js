@@ -4,9 +4,9 @@ const { setDjangoToken, loginController} = require('../controllers/authControlle
 const authenticate = require('../middlewares/authenticate');
 
 
-router.post('/set-token', setDjangoToken)
-router.post('/login', loginController)
-router.post('/protected', authenticate, (req, res) => {
+router.post('/auth/set-token', setDjangoToken)
+router.post('/auth/login', loginController)
+router.post('/auth/protected', authenticate, (req, res) => {
     res.json({ message: `Hello ${req.user.username}, you are authenticated.`})
 })
 

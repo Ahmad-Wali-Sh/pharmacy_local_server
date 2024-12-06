@@ -3,7 +3,7 @@ const router = express.Router();
 const authenticate = require('../middlewares/authenticate');
 const { getOfflineMedicines } = require('../controllers/medicineController');
 
-router.get('/', authenticate, async (req, res) => {
+router.get('/medicine', authenticate, async (req, res) => {
     try {
       const filters = req.query;  
       const medicines = await getOfflineMedicines(filters);

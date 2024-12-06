@@ -18,8 +18,8 @@ app.use(cors());
 
 app.use(express.json());
 app.use('/', prescriptionRoutes);
-app.use('/auth', authRoutes);
-app.use('/medicine', medicineRoutes);
+app.use('/', authRoutes);
+app.use('/', medicineRoutes);
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 sequelize.sync()
