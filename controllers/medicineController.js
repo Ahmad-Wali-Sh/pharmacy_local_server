@@ -4,7 +4,7 @@ const PharmGroup = require('../models/PharmGroup')
 const Country = require('../models/Country')
 const MedicineBarcode = require('../models/MedicineBarcode')
 const MedicineWith = require('../models/MedicineWith')
-const { Op } = require('sequelize'); 
+
 const BigCompany = require('../models/BigCompany')
 
 async function getOfflineMedicines(filters) {

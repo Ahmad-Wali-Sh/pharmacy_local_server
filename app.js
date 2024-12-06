@@ -17,7 +17,7 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-app.use('/prescriptions', prescriptionRoutes);
+app.use('/', prescriptionRoutes);
 app.use('/auth', authRoutes);
 app.use('/medicine', medicineRoutes);
 app.use('/static', express.static(path.join(__dirname, 'static')));
