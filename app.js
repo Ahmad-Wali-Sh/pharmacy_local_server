@@ -3,6 +3,7 @@ const sequelize = require('./config/database');
 const prescriptionRoutes = require('./routes/prescriptions');
 const authRoutes = require('./routes/auth');
 const medicineRoutes = require('./routes/medicine');
+const departmentRoutes = require('./routes/department');
 const { findBackendUrl } = require('./utils/findBackendUrl');
 const path = require('path');
 const cors = require('cors');
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use('/', prescriptionRoutes);
 app.use('/', authRoutes);
 app.use('/', medicineRoutes);
+app.use('/', departmentRoutes);
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 sequelize.sync()

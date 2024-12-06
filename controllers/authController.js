@@ -50,10 +50,11 @@ exports.loginController = async (req, res) => {
     if (!user.django_token) {
       const expressToken = generateToken(user.username);
       await user.update({ express_token: expressToken})
-
-      return res.json({token: expressToken, message: 'Logged in using Express'})
+      const user_detail = await User.findOne({ where: { id: user.id}, attributes: ['username', 'first_name', 'last_name', 'id', 'permissions']})
+      return res.json({token: expressToken, message: 'Logged in using Express', user: user_detail})
     }
-    return res.json({ token: user.django_token, message: 'Logged in using Django token.'})
+    const user_detail = await User.findOne({ where: { id: user.id}, attributes: ['username', 'first_name', 'last_name', 'id', 'permissions']})
+    return res.json({ token: user.django_token, message: 'Logged in using Django token.', user: user_detail})
   } catch (err) {
     res.status(500).json({message: 'Login Failed', error: err.message})
   }

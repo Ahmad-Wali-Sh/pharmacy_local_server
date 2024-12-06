@@ -10,6 +10,7 @@ const User = sequelize.define(
     last_name: { type: DataTypes.STRING, allowNull: true },
     django_token: { type: DataTypes.STRING, allowNull: true },
     express_token: { type: DataTypes.STRING, allowNull: true },
+    permissions: { type: DataTypes.JSON, allowNull: true}
   },
   {
     timestamps: true,
