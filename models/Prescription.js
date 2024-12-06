@@ -4,7 +4,8 @@ const PrescriptionThrough = require('./PrescriptionThrough')
 const Doctor = require('./Doctor')
 const Patient = require('./Patient')
 const Department = require('./Department')
-const User = require('./User')
+const User = require('./User');
+const Medicine = require('./Medicine');
 
 
 const Prescription = sequelize.define('Prescription', {
@@ -14,6 +15,7 @@ const Prescription = sequelize.define('Prescription', {
     name_id: { type: DataTypes.INTEGER, allowNull: true }, // ForeignKey
     doctor_id: { type: DataTypes.INTEGER, allowNull: true }, // ForeignKey
     grand_total: { type: DataTypes.FLOAT, defaultValue: 0 },
+    barcode_str: { type: DataTypes.STRING, allowNull: true },
     discount_money: { type: DataTypes.FLOAT, defaultValue: 0 },
     discount_percent: { type: DataTypes.FLOAT, defaultValue: 0 },
     over_money: { type: DataTypes.FLOAT, defaultValue: 0 },
@@ -39,7 +41,8 @@ Prescription.belongsTo(Doctor, { foreignKey: 'doctor_id', as: 'doctor' });
 Prescription.belongsTo(Department, { foreignKey: 'department_id', as: 'department' }); 
 PrescriptionThrough.belongsTo(Prescription, { foreignKey: 'prescription_id', as: 'item' });
 PrescriptionThrough.belongsTo(User, { foreignKey: 'user_id' });
-  
+PrescriptionThrough.belongsTo(Medicine, { foreignKey: 'medician_id', as: 'medicine'})  
+
 Prescription.hasMany(PrescriptionThrough, { foreignKey: 'prescription_id', as: 'items' });
 Patient.hasMany(Prescription, { foreignKey: 'name_id', as: 'prescriptions' }); 
 Doctor.hasMany(Prescription, { foreignKey: 'doctor_id', as: 'prescriptions' }); 

@@ -19,19 +19,21 @@ const handleCreate =
     }
   };
 
-const handleGetAll = (model) => async (req, res) => {
+const handleGetAll = (model, options={}) => async (req, res) => {
   try {
-    const records = await model.findAll();
+    const records = await model.findAll({
+      ...options
+    });
     res.status(200).json(records);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const handleGetById = (model) => async (req, res) => {
+const handleGetById = (model, options={}) => async (req, res) => {
   try {
     const { id } = req.params;
-    const record = await model.findOne({ where: { id } });
+    const record = await model.findOne({ where: { id }, ...options });
     if (!record) {
       return res.status(404).json({ message: "Record not found" });
     }
