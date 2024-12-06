@@ -12,7 +12,7 @@ const Medicine = sequelize.define('Medicine', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   medicine_full: {type: DataTypes.STRING, allowNull: true},
   brand_name: { type: DataTypes.STRING, allowNull: false },
-  generic_name: { type: DataTypes.JSON, defaultValue: [] },
+  generic_name: { type: DataTypes.STRING, allowNull: true },
   barcode: { type: DataTypes.JSON, defaultValue: [] },
   no_pocket: { type: DataTypes.FLOAT, allowNull: true },
   no_box: { type: DataTypes.FLOAT, defaultValue: 1 },

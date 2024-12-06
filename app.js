@@ -19,10 +19,10 @@ app.use(cors());
 app.use(express.json());
 app.use('/prescriptions', prescriptionRoutes);
 app.use('/auth', authRoutes);
-app.use('/medicines', medicineRoutes);
+app.use('/medicine', medicineRoutes);
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
-sequelize.sync({ alter: true, force: true })
+sequelize.sync()
     .then(() => console.log('Database synchronized'))
     .catch((err) => console.error('Database sync error:', err));
 

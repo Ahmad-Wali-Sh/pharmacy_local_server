@@ -4,49 +4,68 @@ const PharmGroup = require('../models/PharmGroup')
 const Country = require('../models/Country')
 const MedicineBarcode = require('../models/MedicineBarcode')
 const MedicineWith = require('../models/MedicineWith')
+const { Op } = require('sequelize'); 
+const BigCompany = require('../models/BigCompany')
 
 async function getOfflineMedicines(filters) {
   try {
     const whereClause = {}; 
     
     if (filters.brand_name) {
-      whereClause.brand_name = filters.brand_name;
+      whereClause.brand_name = { [Op.like]: `%${filters.brand_name}%` }; 
     }
     if (filters.generic_name) {
-      whereClause.generic_name = { [Sequelize.Op.contains]: filters.generic_name }; 
+      const genericNames = filters.generic_name.split(',');
+
+      whereClause.generic_name = {
+        [Op.and]: genericNames.map((name) => ({
+          [Op.like]: `%${name}%`,
+        })),
+      };
+    }
+    if (filters.ml) {
+      whereClause.ml = { [Op.like]: `%${filters.ml}%`}
     }
     if (filters.country) {
-      whereClause.country = filters.country;
+      whereClause['$Country.name$'] = { [Op.like]: `${filters.country}%` }; 
     }
-    if (filters.pharm_group) {
-      whereClause.pharm_group = filters.pharm_group;
+    if (filters.big_company) {
+      whereClause['$BigCompany.name$'] = { [Op.like]: `${filters.big_company}%` };  
     }
-    if (filters.kind) {
-      whereClause.kind = filters.kind;
+    if (filters.kind_persian) {
+      whereClause['$Kind.name_persian$'] = { [Op.like]: `${filters.kind_persian}%`}
+    }
+    if (filters.kind_english) {
+      whereClause['$Kind.name_english$'] = { [Op.like]: `${filters.kind_english}%`}
     }
     if (filters.active !== undefined) {
       whereClause.active = filters.active === 'true';  
     }
-    if (filters.price) {
-      whereClause.price = { [Sequelize.Op.lte]: filters.price }; 
-    }
-    if (filters.min_existence) {
-      whereClause.existence = { [Sequelize.Op.gte]: filters.min_existence };
-    }
 
-    // Get the filtered medicines
     const medicines = await Medicine.findAll({
       where: whereClause,
       include: [
-        { model: Kind },
-        { model: PharmGroup },
-        { model: Country },
+        { model: Kind},
+        { model: PharmGroup},
+        { model: Country},
+        { model: BigCompany},
         { model: MedicineBarcode, as: 'barcodes' },
       ],
     });
-    console.log(medicines)
+    const formattedMedicines = medicines.map((medicine) => {
+      const { Kind, PharmGroup, Country, barcodes, generic_name, BigCompany, ...rest } = medicine.toJSON();
+      return {
+        ...rest,
+        kind: Kind || null,
+        pharm_group: PharmGroup || null,
+        country: Country || null,
+        barcodes: barcodes || [],
+        big_company: BigCompany || null,
+        generic_name: generic_name ? generic_name.split(',') : [],
+      };
+    });
 
-    return medicines;
+    return formattedMedicines;
   } catch (error) {
     console.error('Error fetching offline medicines:', error.message);
     return [];

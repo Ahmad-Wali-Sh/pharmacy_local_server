@@ -7,6 +7,9 @@ async function syncData(endpoint, model) {
       const records = response.data;
       for (const record of records) {
         if (record) {
+          if (Array.isArray(record.generic_name)) {
+            record.generic_name = record.generic_name.join(',');
+          }
           await model.upsert(record);
         }
       }
