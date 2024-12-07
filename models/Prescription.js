@@ -10,7 +10,7 @@ const Medicine = require('./Medicine');
 
 const Prescription = sequelize.define('Prescription', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    department_id: { type: DataTypes.INTEGER, allowNull: false }, // ForeignKey
+    department: { type: DataTypes.INTEGER, allowNull: false }, // ForeignKey
     prescription_number: { type: DataTypes.STRING, unique: true },
     name_id: { type: DataTypes.INTEGER, allowNull: true }, // ForeignKey
     doctor_id: { type: DataTypes.INTEGER, allowNull: true }, // ForeignKey
@@ -38,7 +38,7 @@ const Prescription = sequelize.define('Prescription', {
 Prescription.belongsTo(User, { foreignKey: 'user_id', as: 'user'})  
 Prescription.belongsTo(Patient, { foreignKey: 'name_id', as: 'patient' }); 
 Prescription.belongsTo(Doctor, { foreignKey: 'doctor_id', as: 'doctor' }); 
-Prescription.belongsTo(Department, { foreignKey: 'department_id', as: 'department' }); 
+Prescription.belongsTo(Department, { foreignKey: 'department', as: 'department_id' }); 
 PrescriptionThrough.belongsTo(Prescription, { foreignKey: 'prescription_id', as: 'item' });
 PrescriptionThrough.belongsTo(User, { foreignKey: 'user_id' });
 PrescriptionThrough.belongsTo(Medicine, { foreignKey: 'medician_id', as: 'medicine'})  
@@ -46,6 +46,6 @@ PrescriptionThrough.belongsTo(Medicine, { foreignKey: 'medician_id', as: 'medici
 Prescription.hasMany(PrescriptionThrough, { foreignKey: 'prescription_id', as: 'items' });
 Patient.hasMany(Prescription, { foreignKey: 'name_id', as: 'prescriptions' }); 
 Doctor.hasMany(Prescription, { foreignKey: 'doctor_id', as: 'prescriptions' }); 
-Department.hasMany(Prescription, { foreignKey: 'department_id', as: 'prescriptions' }); 
+Department.hasMany(Prescription, { foreignKey: 'department', as: 'prescriptions' }); 
 
 module.exports = Prescription;

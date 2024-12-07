@@ -6,9 +6,9 @@ const generateRandomBarcode = require('../utils/generateRandomBarcode');
 
 exports.getPrescriptionItems = async (req, res) => {
     try {
-        const { prescription_id } = req.params;
-        const prescriptionThroughs = await PrescriptionThrough.findAll({ where: { prescription_id }, include: [
-            { model: Medicine}
+        const { prescription } = req.query;
+        const prescriptionThroughs = await PrescriptionThrough.findAll({ where: { prescription_id: prescription }, include: [
+            { model: Medicine, as: 'medicine'}
         ]})
         res.status(202).json(prescriptionThroughs)
     } catch (err) {

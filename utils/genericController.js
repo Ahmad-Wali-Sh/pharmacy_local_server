@@ -6,6 +6,7 @@ const handleCreate =
     try {
       let data = req.body;
       data.user_id = req.user.id; // If you want to attach the logged-in user
+      console.log(req)
       const record = await model.create(data);
 
       if (after) {

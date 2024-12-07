@@ -16,7 +16,7 @@ const Medicine = require("../models/Medicine");
 const router = express.Router();
 
 const PrescriptionIncludes = [
-  { model: Department, as: "department" },
+  { model: Department, as: "department_id" },
   { model: Patient, as: "patient" },
   { model: Doctor, as: "doctor" },
   {
@@ -109,7 +109,7 @@ router.delete(
   GenericController.handleDelete(PrescriptionThrough)
 );
 router.get(
-  "/prescription-throughs/:prescription_id",
+  "/prescription-through/",
   authenticate,
   getPrescriptionItems
 );
