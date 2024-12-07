@@ -4,6 +4,7 @@ const PharmGroup = require('../models/PharmGroup')
 const Country = require('../models/Country')
 const MedicineBarcode = require('../models/MedicineBarcode')
 const MedicineWith = require('../models/MedicineWith')
+const { Op } = require("sequelize");
 
 const BigCompany = require('../models/BigCompany')
 
@@ -42,17 +43,18 @@ async function getOfflineMedicines(filters) {
       whereClause.active = filters.active === 'true';  
     }
 
-    const medicines = await Medicine.findAll({
+    const { count, rows } = await Medicine.findAndCountAll({
       where: whereClause,
       include: [
-        { model: Kind},
-        { model: PharmGroup},
-        { model: Country},
-        { model: BigCompany},
+        { model: Kind },
+        { model: PharmGroup },
+        { model: Country },
+        { model: BigCompany },
         { model: MedicineBarcode, as: 'barcodes' },
       ],
+      limit: 50, // Limit results to 50
     });
-    const formattedMedicines = medicines.map((medicine) => {
+    const formattedMedicines = rows.map((medicine) => {
       const { Kind, PharmGroup, Country, barcodes, generic_name, BigCompany, ...rest } = medicine.toJSON();
       return {
         ...rest,
@@ -65,7 +67,10 @@ async function getOfflineMedicines(filters) {
       };
     });
 
-    return formattedMedicines;
+    return {
+      count,
+      results: formattedMedicines,
+    };
   } catch (error) {
     console.error('Error fetching offline medicines:', error.message);
     return [];
